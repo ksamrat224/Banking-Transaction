@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
   {
@@ -30,7 +31,15 @@ const userSchema = mongoose.Schema(
     timestamps: true, // Automatically add createdAt and updatedAt fields
   },
 );
-userSchema.pre("save",async function(next) {
-    if (!this.isModified("password")) {
-})
-module.exports = mongoose.model("User", userSchema); // Export the User model for use in other files
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next(); // If password is not modified, skip hashing
+  }
+  this.password = await bcrypt.hash(this.password, 12);
+  return next();
+});
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+const userModel = mongoose.model("User", userSchema);
+module.exports = userModel; // Export the User model for use in other files
