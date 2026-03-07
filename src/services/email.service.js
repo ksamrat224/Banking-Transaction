@@ -38,6 +38,14 @@ const sendEmail = async (to, subject, text, html) => {
   }
 };
 
-module.exports = sendEmail;
+async function sendRegistrationEmail(userEmail, name) {
+  const subject = "Welcome to Samrat Bank!";
+  const text = `Hello ${name},\n\nThank you for registering with Samrat Bank. We're excited to have you on board!`;
+  const html = `<p>Hello ${name},</p><p>Thank you for registering with Samrat Bank. We're excited to have you on board!</p>`;
 
-module.exports = transporter;
+  await sendEmail(userEmail, subject, text, html);
+}
+
+module.exports = {
+  sendRegistrationEmail,
+};
