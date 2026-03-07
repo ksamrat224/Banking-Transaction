@@ -31,12 +31,11 @@ const userSchema = mongoose.Schema(
     timestamps: true, // Automatically add createdAt and updatedAt fields
   },
 );
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   if (!this.isModified("password")) {
-    return next(); // If password is not modified, skip hashing
+    return;
   }
   this.password = await bcrypt.hash(this.password, 12);
-  return next();
 });
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);

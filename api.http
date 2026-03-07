@@ -1,0 +1,65 @@
+### Ghar Sewa API Testing
+### Base URL
+@baseUrl = http://localhost:3000/api
+
+# Set environment variables for local testing
+@baseUrl = http://localhost:3000/api/auth
+
+### Register a new user
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+### Login with existing user
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+###############################################
+# Authentication Routes
+###############################################
+
+### Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "John Doe",
+  "phone": "9876543213",
+  "email": "john3@example.com",
+  "password": "Password123!"
+}
+
+### Login with username and password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "john3@example.com",
+  "password": "Password123!"
+}
+
+### Send OTP to phone number
+POST {{baseUrl}}/auth/send-otp
+Content-Type: application/json
+
+{
+  "phone": "9876543210"
+}
+
+### Verify OTP and login
+POST {{baseUrl}}/auth/verify-otp
+Content-Type: application/json
+
+{
+  "phone": "9876543210",
+  "otp": "123456"
+}
