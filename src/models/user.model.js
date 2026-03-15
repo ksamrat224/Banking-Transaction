@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const userSchema =  new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -25,6 +25,12 @@ const userSchema =  new mongoose.Schema(
       trim: true,
       minlength: [6, "password must be at least 6 characters long"],
       select: false, // Exclude password from query results by default
+    },
+    systemUser: {
+      type: Boolean,
+      default: false,
+      immutable: true, // Prevent changes to this field after creation
+      select: false, // Exclude systemUser from query results by default
     },
   },
   {
