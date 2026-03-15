@@ -52,6 +52,16 @@ async function sendTransactionEmail(userEmail, name, amount, toAccount) {
   const html = `<p>Hello ${name},</p><p>A transaction of $${amount} has been made from your account to account number ${toAccount}. If you did not authorize this transaction, please contact us immediately.</p>`;
   await sendEmail(userEmail, subject, text, html);
 }
+
+async function sendTransactionFailureEmail(userEmail, name, amount, toAccount) {
+  const subject = "Transaction Failed - Samrat Bank";
+  const text = `Hello ${name},\n\nA transaction of $${amount} from your account to account number ${toAccount} has failed. If you did not authorize this transaction, please contact us immediately.`;
+  const html = `<p>Hello ${name},</p><p>A transaction of $${amount} from your account to account number ${toAccount} has failed. If you did not authorize this transaction, please contact us immediately.</p>`;
+  await sendEmail(userEmail, subject, text, html);
+}
+
 module.exports = {
   sendRegistrationEmail,
+  sendTransactionEmail,
+  sendTransactionFailureEmail,
 };
